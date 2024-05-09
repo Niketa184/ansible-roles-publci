@@ -1,0 +1,23 @@
+---
+- name: Install the "{{pkg_name}}"
+  apt:
+    name: "{{pkg_name}}"
+    state: present
+
+- name: Create Index.html file
+  copy:
+    content: "{{mycode}}"
+    dest: "{{destination_path}}"
+
+- name: Using template module to create a dynamic code file
+  template:
+    src: new.html.j2
+    dest: "{{new_dest}}"
+
+- name: Creating niketa.html
+  copy:
+    src: niketa.html
+    dest: /var/www/html/
+  notify: restart apache
+
+
